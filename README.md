@@ -19,7 +19,7 @@ Next.js ভিত্তিক বাংলাভাষী কর্মকর্�
 
 ## প্রদর্শনের পথ
 
-**নতুন সমন্বিত অপারেশন:** কর্মকর্তার সাইন ইনের পর `/operations` খুলুন। তিনটি seeded case-এ নাগরিক/অনুমোদিত CCTV/ড্রোন/মাঠের signal, উৎসের বয়স ও সীমা, সম্ভাব্য duplicate, asset path, সম্ভাব্য কারণ, ব্যাখ্যাসহ priority, একাধিক দলের mission, বৃষ্টি ও জরুরি অবস্থার পরিবর্তন, ফল যাচাই এবং stakeholder challenge দেখা যায়। অগ্রাধিকার বাছা, নমুনা mission অনুমোদন এবং checkboxes কেবল এই browser session-এর rehearsal; এগুলো database task তৈরি বা বদলায় না। একই JSON seed `src/lib/operations-seed.json` ও Flutter-এর `assets/operations-seed.json`-এ রাখা হয়েছে। বাস্তব shared assignment এখনও ঘটনা কেন্দ্র ও কাজের তালিকায় হয়।
+**নতুন সমন্বিত অপারেশন:** কর্মকর্তার সাইন ইনের পর `/operations` খুলুন। তিনটি seeded case-এ এলাকার নমুনা map, ড্রেনের প্রবাহ ও asset marker, অনুমোদনসাপেক্ষ drone survey polygon/route, local CCTV/ড্রোন/মাঠের নমুনা clip বা frame, evidence review, ব্যাখ্যাসহ priority, map থেকে বাছা team task, বৃষ্টি/জরুরি পরিস্থিতি, ফল যাচাই এবং stakeholder challenge দেখা যায়। নমুনা survey, media box/confidence, priority adjustment ও task assignment কেবল এই browser session-এর rehearsal; এগুলো hardware চালায় না বা database task তৈরি/বদলায় না। একই JSON seed `src/lib/operations-seed.json` ও Flutter-এর `assets/operations-seed.json`-এ রাখা হয়েছে। বাস্তব shared assignment এখনও ঘটনা কেন্দ্র ও কাজের তালিকায় হয়। Engineering sequence, data contract ও pilot gate: [`docs/UNIFIED_CITY_OPERATIONS_ROADMAP.md`](docs/UNIFIED_CITY_OPERATIONS_ROADMAP.md)।
 
 1. নির্বাহী অ্যাকাউন্ট → সারসংক্ষেপ, মানচিত্র ও ঘটনা দেখুন।
 2. মিডিয়া বিশ্লেষণে `mixed` দৃশ্য নির্বাচন করুন। স্কোর ও শনাক্তকরণ **সিমুলেটেড**। পর্যবেক্ষণ যাচাইয়ের তালিকায় পাঠান।

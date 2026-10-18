@@ -18,8 +18,36 @@
         { "source": "drone", "age": "1 day", "quality": "low", "text": { "en": "Approved survey image shows waste along the corridor.", "bn": "অনুমোদিত জরিপের ছবিতে করিডরজুড়ে বর্জ্য দেখা যায়।" }, "limit": { "en": "Older image; confirm current conditions on site.", "bn": "ছবিটি পুরোনো; বর্তমান অবস্থা মাঠে মিলিয়ে নিতে হবে।" } },
         { "source": "field", "age": "2 h", "quality": "high", "text": { "en": "Ward worker notes a blocked inlet and access for a small vehicle.", "bn": "ওয়ার্ডকর্মী বন্ধ inlet এবং ছোট গাড়ির প্রবেশপথ নথিভুক্ত করেছেন।" }, "limit": { "en": "Outlet condition still unknown.", "bn": "পানি বের হওয়ার মুখের অবস্থা এখনও অজানা।" } }
       ],
+      "media": [
+        { "id": "market-cctv", "source": "camera", "kind": "video", "preset": "mixed", "age": "12 min", "timeRange": "00:04–00:09", "confidence": 0.82, "box": [14, 45, 35, 30], "optionId": "culvert", "boost": 6, "initiallyUsed": true, "finding": { "en": "Water and waste appear near the same road section.", "bn": "একই সড়ক অংশে পানি ও বর্জ্য দেখা যায়।" }, "limit": { "en": "Camera cannot see inside the culvert; this is a review cue, not proof of blockage.", "bn": "ক্যামেরায় কালভার্টের ভেতর দেখা যায় না; এটি যাচাইয়ের সংকেত, বাধার প্রমাণ নয়।" } },
+        { "id": "market-drone", "source": "drone", "kind": "image", "preset": "mixed", "age": "1 day", "timeRange": "still", "confidence": 0.64, "box": [59, 43, 24, 25], "optionId": "local", "boost": 3, "initiallyUsed": false, "finding": { "en": "Waste follows the inlet corridor.", "bn": "inlet করিডর বরাবর বর্জ্য দেখা যায়।" }, "limit": { "en": "Older survey; a new field check is needed.", "bn": "পুরোনো জরিপ; নতুন মাঠ যাচাই দরকার।" } },
+        { "id": "market-field", "source": "field", "kind": "image", "preset": "drain", "age": "2 h", "timeRange": "still", "confidence": 0.9, "box": [16, 47, 57, 29], "optionId": "culvert", "boost": 5, "initiallyUsed": true, "finding": { "en": "Inlet is blocked; downstream outlet is unconfirmed.", "bn": "inlet বন্ধ; নিচের outlet এখনও নিশ্চিত নয়।" }, "limit": { "en": "An engineer must confirm the downstream cause.", "bn": "নিচের কারণ প্রকৌশলীকে নিশ্চিত করতে হবে।" } }
+      ],
       "duplicate": { "en": "Two resident reports and the camera view may describe the same location. Keep each source, link them to one case and let the officer confirm.", "bn": "দুটি নাগরিক প্রতিবেদন ও ক্যামেরার দৃশ্য একই জায়গার হতে পারে। উৎসগুলো রেখে একটি ঘটনায় মিলিয়ে কর্মকর্তা নিশ্চিত করবেন।" },
       "assetPath": ["Market inlet D-21", "Main drain D-06", "Culvert C-04", "Canal outlet"],
+      "map": {
+        "label": { "en": "Illustrative market corridor map", "bn": "নমুনা বাজার করিডর মানচিত্র" },
+        "buildings": [[8, 8, 22, 17], [38, 8, 20, 17], [68, 8, 22, 17], [8, 76, 25, 15], [43, 76, 20, 15], [73, 76, 18, 15]],
+        "roads": [[[0, 34], [100, 34]], [[0, 72], [100, 72]], [[34, 0], [34, 100]], [[66, 0], [66, 100]]],
+        "drains": [
+          { "id": "D-21 → D-06", "points": [[14, 63], [42, 63], [52, 63]] },
+          { "id": "D-06 → C-04 → canal", "points": [[52, 63], [75, 63], [94, 63]] }
+        ],
+        "assets": [
+          { "id": "D-21", "x": 18, "y": 63, "kind": "drain", "label": { "en": "Market inlet", "bn": "বাজারের inlet" }, "downstream": "D-06", "taskIndex": 1 },
+          { "id": "D-06", "x": 52, "y": 63, "kind": "drain", "label": { "en": "Main drain", "bn": "প্রধান ড্রেন" }, "downstream": "C-04", "taskIndex": 1 },
+          { "id": "C-04", "x": 75, "y": 63, "kind": "culvert", "label": { "en": "Possible downstream blockage", "bn": "নিচে সম্ভাব্য বাধা" }, "downstream": "Canal outlet", "taskIndex": 1 },
+          { "id": "W-01", "x": 48, "y": 33, "kind": "footpath", "label": { "en": "Crowded footpath", "bn": "বাধাগ্রস্ত ফুটপাত" }, "downstream": "—", "taskIndex": 2 }
+        ],
+        "cameras": [[62, 32]],
+        "survey": {
+          "polygon": [[9, 28], [89, 28], [89, 70], [9, 70]],
+          "route": [[13, 38], [85, 38], [85, 48], [13, 48], [13, 58], [85, 58]],
+          "launch": [13, 38],
+          "scope": { "en": "Survey inlet, waste line and culvert corridor", "bn": "inlet, বর্জ্যের রেখা ও কালভার্ট করিডর জরিপ" },
+          "permission": { "en": "Ward and aviation approvals, safe launch point and privacy review required", "bn": "ওয়ার্ড ও উড্ডয়ন অনুমতি, নিরাপদ launch point এবং privacy review দরকার" }
+        }
+      },
       "hypothesis": { "en": "The road water may be held back at culvert C-04 downstream.", "bn": "রাস্তার পানি নিচের দিকের C-04 কালভার্টে আটকে থাকতে পারে।" },
       "reason": { "en": "Several upstream drains depend on it and a previous blockage was recorded. This is a network-based lead, not a flood simulation.", "bn": "উপরের কয়েকটি ড্রেন এটির ওপর নির্ভর করে এবং আগেও এখানে বাধা নথিভুক্ত হয়েছে। এটি সংযোগভিত্তিক ধারণা, বন্যার simulation নয়।" },
       "fieldCheck": { "en": "Engineer checks the inlet, culvert and outlet before confirming the cause.", "bn": "কারণ নিশ্চিত করার আগে প্রকৌশলী inlet, কালভার্ট ও outlet দেখবেন।" },
@@ -59,8 +87,32 @@
         { "source": "drone", "age": "6 h", "quality": "medium", "text": { "en": "Approved overhead survey suggests waste in the gap.", "bn": "অনুমোদিত ওপরের জরিপে ফাঁকে বর্জ্যের ইঙ্গিত পাওয়া যায়।" }, "limit": { "en": "Roof and walls hide part of the ground.", "bn": "ছাদ ও দেয়ালে মাটির কিছু অংশ আড়াল থাকে।" } },
         { "source": "field", "age": "1 day", "quality": "low", "text": { "en": "Health worker requested access to inspect water.", "bn": "স্বাস্থ্যকর্মী পানি পরীক্ষার জন্য প্রবেশের অনুরোধ করেছেন।" }, "limit": { "en": "Owner permission is still needed.", "bn": "মালিকের অনুমতি এখনও প্রয়োজন।" } }
       ],
+      "media": [
+        { "id": "alley-camera", "source": "camera", "kind": "video", "preset": "water", "age": "4 h", "timeRange": "00:02–00:06", "confidence": 0.58, "box": [19, 60, 64, 23], "optionId": "drain", "boost": 2, "initiallyUsed": false, "finding": { "en": "Water is visible near the lane, not inside the gap.", "bn": "গলির কাছে পানি দেখা যায়, ভবনের ফাঁকের ভেতরে নয়।" }, "limit": { "en": "Camera blind spot; do not conclude mosquito presence.", "bn": "ক্যামেরার আড়াল আছে; মশা আছে বলে সিদ্ধান্ত নয়।" } },
+        { "id": "alley-drone", "source": "drone", "kind": "image", "preset": "water", "age": "6 h", "timeRange": "still", "confidence": 0.72, "box": [19, 60, 64, 23], "optionId": "health", "boost": 5, "initiallyUsed": true, "finding": { "en": "Standing water is possible in the building gap.", "bn": "ভবনের ফাঁকে পানি জমে থাকার সম্ভাবনা দেখা যায়।" }, "limit": { "en": "Roof occlusion and no larval inspection.", "bn": "ছাদের আড়াল আছে এবং লার্ভা পরীক্ষা হয়নি।" } },
+        { "id": "alley-resident", "source": "citizen", "kind": "image", "preset": "water", "age": "4 h", "timeRange": "still", "confidence": 0.66, "box": [19, 60, 64, 23], "optionId": "health", "boost": 3, "initiallyUsed": true, "finding": { "en": "Resident photo supports a site visit.", "bn": "বাসিন্দার ছবি মাঠে যাওয়ার প্রয়োজন সমর্থন করে।" }, "limit": { "en": "Exact location and water condition need confirmation.", "bn": "সঠিক অবস্থান ও পানির অবস্থা নিশ্চিত করতে হবে।" } }
+      ],
       "duplicate": { "en": "Keep repeated resident reports together, but show that the site has not yet been inspected.", "bn": "একই জায়গার বারবার দেওয়া প্রতিবেদন একত্রে রাখুন, তবে মাঠপর্যায়ে পরীক্ষা হয়নি তা স্পষ্ট দেখান।" },
       "assetPath": ["Lane entrance", "Building gap", "Local drain", "Main drain"],
+      "map": {
+        "label": { "en": "Illustrative building-gap map", "bn": "নমুনা ভবনের ফাঁকের মানচিত্র" },
+        "buildings": [[8, 8, 31, 48], [57, 8, 31, 48], [8, 76, 31, 16], [57, 76, 31, 16]],
+        "roads": [[[0, 65], [100, 65]], [[48, 0], [48, 100]]],
+        "drains": [{ "id": "Gap → local drain → main drain", "points": [[48, 30], [48, 52], [48, 65], [84, 65]] }],
+        "assets": [
+          { "id": "G-01", "x": 48, "y": 30, "kind": "water", "label": { "en": "Hidden standing water", "bn": "আড়ালে জমা পানি" }, "downstream": "D-31", "taskIndex": 1 },
+          { "id": "G-02", "x": 48, "y": 50, "kind": "waste", "label": { "en": "Waste in the gap", "bn": "ভবনের ফাঁকে বর্জ্য" }, "downstream": "D-31", "taskIndex": 2 },
+          { "id": "D-31", "x": 48, "y": 65, "kind": "drain", "label": { "en": "Local drain", "bn": "স্থানীয় ড্রেন" }, "downstream": "Main drain", "taskIndex": 3 }
+        ],
+        "cameras": [[19, 65]],
+        "survey": {
+          "polygon": [[41, 15], [55, 15], [55, 60], [41, 60]],
+          "route": [[44, 20], [52, 20], [52, 36], [44, 36], [44, 52], [52, 52]],
+          "launch": [44, 20],
+          "scope": { "en": "Overhead look into the narrow gap; ground remains partly hidden", "bn": "সরু ফাঁকে ওপর থেকে দেখা; মাটির কিছু অংশ আড়ালেই থাকবে" },
+          "permission": { "en": "Property access, flight approval and privacy review required", "bn": "সম্পত্তিতে প্রবেশ, উড্ডয়ন অনুমতি ও privacy review দরকার" }
+        }
+      },
       "hypothesis": { "en": "Waste may prevent water from reaching the local drain; mosquito risk needs a health inspection.", "bn": "বর্জ্য স্থানীয় ড্রেনে পানি যেতে বাধা দিতে পারে; মশার ঝুঁকি স্বাস্থ্যকর্মীর পরীক্ষায় বুঝতে হবে।" },
       "reason": { "en": "The site has repeated reports and poor visibility. No image proves a breeding site.", "bn": "বারবার প্রতিবেদন এসেছে, জায়গাটি সহজে দেখা যায় না। কোনো ছবি প্রজননস্থল প্রমাণ করে না।" },
       "fieldCheck": { "en": "Secure access, inspect water and drainage, and record a corrected map location.", "bn": "প্রবেশের অনুমতি নিয়ে পানি ও ড্রেন দেখুন এবং মানচিত্রে সঠিক অবস্থান লিখুন।" },
@@ -99,8 +151,32 @@
         { "source": "citizen", "age": "50 min", "quality": "medium", "text": { "en": "Residents report the next road is now blocked too.", "bn": "বাসিন্দারা জানিয়েছেন, পাশের রাস্তাও এখন বাধাগ্রস্ত।" }, "limit": { "en": "Second location needs verification.", "bn": "দ্বিতীয় জায়গাটি যাচাই দরকার।" } },
         { "source": "field", "age": "3 days", "quality": "medium", "text": { "en": "Earlier clearance completed at the same market.", "bn": "একই বাজারে আগের উচ্ছেদ সম্পন্ন হয়েছিল।" }, "limit": { "en": "Old completion is not current proof.", "bn": "আগের সমাপ্তি বর্তমান অবস্থার প্রমাণ নয়।" } }
       ],
+      "media": [
+        { "id": "footpath-camera-a", "source": "camera", "kind": "image", "preset": "footpath", "age": "8 min", "timeRange": "sample frame", "confidence": 0.86, "box": [41, 32, 34, 53], "optionId": "crossing", "boost": 7, "initiallyUsed": true, "finding": { "en": "People move from the footpath into the road.", "bn": "পথচারীরা ফুটপাত ছেড়ে রাস্তায় নামছেন।" }, "limit": { "en": "The view covers one junction only.", "bn": "শুধু একটি মোড় ক্যামেরায় দেখা যায়।" } },
+        { "id": "footpath-camera-b", "source": "camera", "kind": "image", "preset": "footpath", "age": "50 min", "timeRange": "sample frame", "confidence": 0.62, "box": [41, 32, 34, 53], "optionId": "other", "boost": 4, "initiallyUsed": false, "finding": { "en": "A second road may now have an obstruction.", "bn": "পাশের রাস্তায়ও বাধা থাকতে পারে।" }, "limit": { "en": "Camera angle differs; verify the second location.", "bn": "ক্যামেরার দিক আলাদা; দ্বিতীয় জায়গা যাচাই দরকার।" } },
+        { "id": "footpath-field", "source": "field", "kind": "image", "preset": "footpath", "age": "3 days", "timeRange": "still", "confidence": 0.75, "box": [41, 32, 34, 53], "optionId": "crossing", "boost": 2, "initiallyUsed": false, "finding": { "en": "Earlier clearance was recorded.", "bn": "আগের উচ্ছেদ নথিভুক্ত ছিল।" }, "limit": { "en": "Old completion is not current access evidence.", "bn": "পুরোনো সমাপ্তি বর্তমান চলাচলের প্রমাণ নয়।" } }
+      ],
       "duplicate": { "en": "Separate the two roads as locations, but link their recurrence under one corridor mission.", "bn": "দুটি রাস্তা আলাদা অবস্থান রাখুন, কিন্তু পুনরাবৃত্তি একই করিডর mission-এ যুক্ত করুন।" },
       "assetPath": ["Market entrance", "Footpath A", "Crossing", "Footpath B"],
+      "map": {
+        "label": { "en": "Illustrative footpath corridor map", "bn": "নমুনা ফুটপাত করিডর মানচিত্র" },
+        "buildings": [[7, 8, 23, 30], [36, 8, 23, 30], [65, 8, 25, 30], [7, 70, 23, 20], [36, 70, 23, 20], [65, 70, 25, 20]],
+        "roads": [[[0, 53], [100, 53]], [[33, 0], [33, 100]], [[63, 0], [63, 100]]],
+        "drains": [{ "id": "Roadside drain", "points": [[6, 67], [33, 67], [63, 67], [93, 67]] }],
+        "assets": [
+          { "id": "F-A", "x": 20, "y": 43, "kind": "footpath", "label": { "en": "First footpath", "bn": "প্রথম ফুটপাত" }, "downstream": "Crossing", "taskIndex": 0 },
+          { "id": "X-01", "x": 50, "y": 53, "kind": "crossing", "label": { "en": "Pedestrian crossing", "bn": "পথচারী পারাপার" }, "downstream": "Footpath B", "taskIndex": 1 },
+          { "id": "F-B", "x": 80, "y": 43, "kind": "footpath", "label": { "en": "Repeat blockage on next road", "bn": "পাশের রাস্তায় আবার বাধা" }, "downstream": "—", "taskIndex": 3 }
+        ],
+        "cameras": [[35, 46], [68, 46]],
+        "survey": {
+          "polygon": [[9, 39], [90, 39], [90, 68], [9, 68]],
+          "route": [[12, 45], [86, 45], [86, 61], [12, 61]],
+          "launch": [12, 45],
+          "scope": { "en": "Optional corridor overview; CCTV and walking checks remain primary", "bn": "ঐচ্ছিক করিডর overview; CCTV ও হেঁটে দেখা প্রধান উৎস" },
+          "permission": { "en": "Flight approval and privacy review required; use field survey if unsuitable", "bn": "উড্ডয়ন অনুমতি ও privacy review দরকার; অনুপযুক্ত হলে মাঠ জরিপ" }
+        }
+      },
       "hypothesis": { "en": "The obstruction is moving along the corridor after each clearance.", "bn": "প্রতিবার উচ্ছেদের পরে বাধাটি করিডরের অন্য জায়গায় সরছে।" },
       "reason": { "en": "A previous completion and a new nearby report suggest recurrence; an officer should confirm both sites.", "bn": "আগের সমাপ্তি ও পাশের নতুন প্রতিবেদন পুনরাবৃত্তির ইঙ্গিত; কর্মকর্তা দুই জায়গাই নিশ্চিত করবেন।" },
       "fieldCheck": { "en": "Walk both sides, confirm pedestrian access and speak with market representatives.", "bn": "দুই পাশ হেঁটে দেখুন, পথচারীর জায়গা নিশ্চিত করুন এবং বাজার প্রতিনিধির সঙ্গে কথা বলুন।" },
