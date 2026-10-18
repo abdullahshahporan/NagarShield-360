@@ -31,10 +31,10 @@ One case can hold several observations and several department tasks. A camera fr
 | Citizen reports, official review, incidents, assigned tasks, evidence and supervisor approval | Shared Supabase workflow in the two clients | Keep as the authoritative work record; improve real pilot roles and audit |
 | Drone/GapScan survey entry and local media annotation | Mobile prototype; no hardware control or inference | Approved survey plan, georeferenced media, consent and upload pipeline |
 | Official web dashboard, map, media studio and reports | Private authenticated prototype | Join each reviewed media item and mapped asset to an operational case |
-| Three connected cases, asset/drain maps, proposed drone routes, footage review, explainable ranking, team assignment and verification | **Seeded local rehearsal** in private web `/operations` and the app (also offline Local Demo) | Replace local state with reviewed, permissioned records in Supabase |
+| Four connected cases across waste, drains, roof/gap water, footpaths, sewage and emergency access; map trace, camera blind areas, capacity-aware assignment, partner acknowledgement, first-responder handoff and repeat checks | **Seeded local rehearsal** in private web `/operations` and the app (also offline Local Demo) | Replace local state with reviewed, permissioned records in Supabase |
 | Live CCTV ingestion, automatic detection, real drone flight, validated drainage model, weather triggers and route optimization | **Not connected** | Pilot only after owner agreements, engineering checks, privacy rules and measurable validation |
 
-The web stays official-only. The app's offline Local Demo is a presentation environment, separate from the real citizen and official workflow. Sample overlays, boxes, confidence, map coordinates, flight routes, score adjustments, task assignment and verification in the Operations screen are illustrative. No control is sent to a drone, CCTV system or city team.
+The web stays official-only. The app's offline Local Demo is a presentation environment, separate from the real citizen and official workflow. Sample overlays, boxes, confidence, map coordinates, flight routes, score adjustments, task assignment, partner acknowledgement, responder clearance and verification in the Operations screen are illustrative. No control or message is sent to a drone, CCTV system, city team or emergency unit.
 
 ## Distinctive decisions to develop
 
@@ -46,6 +46,9 @@ The web stays official-only. The app's offline Local Demo is a presentation envi
 6. **Resource-aware field visits.** Suggest a visit using skill, shift, equipment, vehicle access and nearby jobs. Dispatchers can edit the route and record why.
 7. **Reversible priorities.** Rain, hospital access or a new field report may change the order. Show what is delayed and require an official to approve changes to active work.
 8. **Verified impact.** Compare before/after evidence, revisit after rain or at the same busy hour, record recurrence, and feed map corrections into later recommendations.
+9. **Shared city coordination.** A case owner sees acknowledgements and blockers across city teams, utilities, property owners, market groups and emergency responders. Escalation and a citizen-update draft stay attached to the case; a draft is never silently published.
+10. **First-responder handoff.** For a road crash or fire, police/medical or Fire Service leads the scene. The city shares access and asset information, records which units acknowledged, and waits for the lead's clearance before restarting its own work.
+11. **Hidden-space inspection.** A street camera's blind area can point to a permitted field visit of a building gap or roof garden. Health staff inspect water containers; imagery alone cannot diagnose breeding.
 
 These are product capabilities, not claims that the present prototype has trained models or citywide data.
 
@@ -64,6 +67,9 @@ Keep the existing `observations`, `incidents`, `tasks`, `events`, `infrastructur
 | `mission_cases` | Incident/area, case owner, approved plan, priority, access/equipment needs and escalation | Ward operations lead |
 | Existing `tasks` plus mission link | Department, assignee, due time, route stop, status, evidence requirement and idempotency key | Department supervisor |
 | `verification_checks` | Who checked, site result, before/after keys, recurrence schedule and map correction | Supervisor and engineer/health specialist |
+| `partner_handoffs` | Case, organization, requested action, acknowledgement, blocker, escalation owner and timestamp | Ward case owner and receiving organization |
+| `response_incidents` | Incident commander, responding units, safe access route, scene status, clearance authority and handoff time | Police/medical or Fire Service lead; DNCC supports |
+| `citizen_updates` | Reviewed message, case/status reference, approving officer, channel and delivery result | Authorized communication officer |
 
 All footage remains private. Use signed, short-lived access or authenticated server routes; never store service-role credentials in either client. Keep citizen identities out of shared camera views. Every priority override, media rejection, map correction and assignment needs an audit event. Apply RLS to every new table before a client reads it. The offline app queues only authorized actions with idempotency and clear rejected-action feedback.
 
@@ -99,6 +105,8 @@ Build a local labeled dataset from the pilot area. Evaluate false positives, mis
 
 Connect mapped assets and accepted evidence to an incident. Create one mission owner and department tasks through the existing authorization path. Add skills, shift, equipment, travel/access and nearby-job constraints; support offline field updates. **Gate:** no task goes to an unauthorized team, duplicate retries do not duplicate work, and a supervisor sees every change in one case timeline.
 
+Add partner requests with acknowledgement, blocker and escalation states. External organizations receive only the case details they are allowed to see. Let a communications officer approve a citizen-facing update from verified case status. For crash or fire support, record the actual incident commander and their scene release before DNCC crews resume. **Gate:** a blocked handoff has a named owner, no sample acknowledgement is treated as a real dispatch, and no emergency scene is marked safe by this app.
+
 ### 5. Verification, prevention and crisis rehearsal
 
 Require appropriate before/after evidence and field checks, then schedule a recurrence visit after the next rain or at the same busy hour. Introduce weather and emergency re-prioritization only with official approval and an impact preview. **Gate:** the pilot can measure repeat failure and time from first signal to verified resolution, and can explain every emergency reassignment.
@@ -116,6 +124,6 @@ Require appropriate before/after evidence and field checks, then schedule a recu
 
 ## How to measure the pilot
 
-Before rollout, capture a baseline for one ward. Compare **time from first credible signal to assignment**, **time to field-verified resolution**, **area inspected per staff hour**, **duplicate reports merged correctly**, **repeat failures**, **missed/false media findings**, **task travel and equipment fit**, and **resident/field-worker feedback**. Report the denominator and the time window; do not claim citywide impact from three seeded cases.
+Before rollout, capture a baseline for one ward. Compare **time from first credible signal to assignment**, **time to field-verified resolution**, **time lost waiting for partner acknowledgement**, **area inspected per staff hour**, **duplicate reports merged correctly**, **repeat failures**, **missed/false media findings**, **task travel and equipment fit**, and **resident/field-worker feedback**. Report the denominator and the time window; do not claim citywide impact from four seeded cases.
 
 For the existing integration test and recording plan, see [`INTEGRATION_TEST_AND_RECORDING_PLAN.md`](../INTEGRATION_TEST_AND_RECORDING_PLAN.md). In the recording, show the map's drainage path, an approved survey area, a CCTV clip with its blind spot, an evidence toggle changing the explained recommendation, a map-selected mission task and the verification step. State aloud that these are sample inputs and that the official workflow is the real shared-data part of the prototype.

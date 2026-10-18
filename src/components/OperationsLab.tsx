@@ -5,6 +5,8 @@ import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardCheck, CloudRain, Eye
 import seed from '@/src/lib/operations-seed.json'
 import { OperationsMap } from './OperationsMap'
 import { OperationsEvidence } from './OperationsEvidence'
+import { OperationsResponse } from './OperationsResponse'
+import { OperationsCoordination } from './OperationsCoordination'
 
 type Copy = { en: string; bn: string }
 type Case = (typeof seed.cases)[number]
@@ -35,6 +37,9 @@ export function OperationsLab() {
   const [checked, setChecked] = useState<number[]>([])
   const [rain, setRain] = useState(false)
   const [crisis, setCrisis] = useState(false)
+  const [resourceReady, setResourceReady] = useState(true)
+  const [watchScheduled, setWatchScheduled] = useState(false)
+  const [watchAlert, setWatchAlert] = useState(false)
   const [assetId, setAssetId] = useState(seed.cases[0].map.assets[0].id)
   const [showFlight, setShowFlight] = useState(true)
   const [flightPermission, setFlightPermission] = useState(false)
@@ -60,6 +65,9 @@ export function OperationsLab() {
     setChecked([])
     setRain(false)
     setCrisis(false)
+    setResourceReady(true)
+    setWatchScheduled(false)
+    setWatchAlert(false)
     setAssetId(next.map.assets[0].id)
     setShowFlight(true)
     setFlightPermission(false)
@@ -68,6 +76,7 @@ export function OperationsLab() {
     setUsedEvidence(next.media.filter(item => item.initiallyUsed).map(item => item.id))
   }
   function toggle(index: number, values: number[], setter: (value: number[]) => void) {
+    if (values.includes(index)) setWatchScheduled(false)
     setter(values.includes(index) ? values.filter(value => value !== index) : [...values, index])
   }
   function toggleEvidence(id: string) {
@@ -75,9 +84,29 @@ export function OperationsLab() {
     setChoice(null); setApproved(false); setAssigned([]); setDone([]); setChecked([])
   }
   function advanceTask(index: number) {
+    if (!resourceReady && index === current.capacity.taskIndex) return
     if (!assigned.includes(index)) setAssigned([...assigned, index])
     else if (!done.includes(index)) setDone([...done, index])
     else { setDone(done.filter(value => value !== index)); setChecked([]) }
+  }
+  function changeResource(ready: boolean) {
+    setResourceReady(ready)
+    if (!ready) {
+      const blocked = current.capacity.taskIndex
+      setAssigned(values => values.filter(index => index !== blocked))
+      setDone(values => values.filter(index => index !== blocked))
+      setChecked([])
+    }
+  }
+  function flagRepeat() {
+    setWatchAlert(true)
+    setWatchScheduled(false)
+    setFocusTask(current.watch.taskIndex)
+    setApproved(false)
+    setAssigned([])
+    setDone([])
+    setChecked([])
+    goToStep('mission')
   }
   function goToStep(next: Step) {
     setStep(next)
@@ -104,13 +133,16 @@ export function OperationsLab() {
     </div>}
 
     {step === 'mission' && <div className="ops-two-col">
-      <section className="ops-card"><span className="mini-kicker">একজন case owner, কয়েকটি দল</span><h3>একটি সমন্বিত mission</h3>{focusTask !== null && <div className="ops-check"><MapPinned size={18}/><span>মানচিত্র থেকে বাছা কাজ: {say(current.tasks[focusTask].team)} · {say(current.tasks[focusTask].action)}</span></div>}<p><strong>মূল দায়িত্ব:</strong> {say(current.owner)}</p><p><strong>আগে পরীক্ষা:</strong> {say(selected.title)}</p><p><strong>দল ও সরঞ্জাম:</strong> {say(current.resources)}</p><p><strong>এক সফরের পথ:</strong> {say(current.route)}</p><button type="button" className="button-dark" onClick={() => { if (approved) { setAssigned([]); setDone([]); setChecked([]) } setApproved(!approved) }}>{approved ? 'অনুশীলনের অনুমোদন প্রত্যাহার' : 'নমুনা mission অনুমোদন করুন'}</button><p className="ops-muted">এই বোতাম শুধু এই screen-এর অনুশীলন বদলায়; Supabase-এ দায়িত্ব পাঠায় না।</p></section>
-      <section className="ops-card"><span className="mini-kicker">{assigned.length}টি দায়িত্ব দেওয়া · {done.length}টি কাজ জমা</span><h3>মানচিত্রের তথ্য থেকে দলের কাজ</h3><div className="ops-task-list">{current.tasks.map((task, index) => <button type="button" key={index} disabled={!approved} className={`${done.includes(index) ? 'done' : ''} ${focusTask === index ? 'focused' : ''}`} onClick={() => advanceTask(index)}><CheckCircle2 size={20}/><span><strong>{say(task.team)}</strong><small>{say(task.action)}</small></span><em>{done.includes(index) ? 'জমা · আবার খুলুন' : assigned.includes(index) ? 'দেওয়া · update দিন' : 'দায়িত্ব দিন'}</em></button>)}</div><p className="ops-muted">প্রথম click-এ নমুনা দায়িত্ব, দ্বিতীয় click-এ মাঠের update। বাস্তব assignment ও evidence বিদ্যমান Incident/Task workflow-তে হবে।</p></section>
+      <section className="ops-card"><span className="mini-kicker">একজন case owner, কয়েকটি দল</span><h3>একটি সমন্বিত mission</h3>{watchAlert && <div className="ops-capacity-warning"><strong>পুনরাবৃত্তির নতুন সংকেত</strong><p>{say(current.watch.reason)}</p><small>এটি নতুন কাজের খসড়া; আগের সমাপ্তি বর্তমান অবস্থার প্রমাণ নয়।</small></div>}{focusTask !== null && <div className="ops-check"><MapPinned size={18}/><span>মানচিত্র/পুনরায় দেখার বাছা কাজ: {say(current.tasks[focusTask].team)} · {say(current.tasks[focusTask].action)}</span></div>}<p><strong>মূল দায়িত্ব:</strong> {say(current.owner)}</p><p><strong>আগে পরীক্ষা:</strong> {say(selected.title)}</p><p><strong>দল ও সরঞ্জাম:</strong> {say(current.resources)}</p><p><strong>এক সফরের পথ:</strong> {say(current.route)}</p><div className="ops-capacity-warning"><strong>দল ও সরঞ্জাম সত্যিই পাওয়া যাচ্ছে?</strong><label className="ops-use-evidence"><input type="checkbox" checked={resourceReady} onChange={event => changeResource(event.target.checked)}/>{say(current.capacity.resource)} প্রস্তুত (নমুনা)</label>{!resourceReady && <><p>{say(current.capacity.whenMissing)}</p><p><strong>বিকল্প:</strong> {say(current.capacity.fallback)}</p></>}</div><button type="button" className="button-dark" onClick={() => { if (approved) { setAssigned([]); setDone([]); setChecked([]) } setApproved(!approved) }}>{approved ? 'অনুশীলনের অনুমোদন প্রত্যাহার' : 'নমুনা mission অনুমোদন করুন'}</button><p className="ops-muted">এই বোতাম শুধু এই screen-এর অনুশীলন বদলায়; Supabase-এ দায়িত্ব পাঠায় না।</p></section>
+      <section className="ops-card"><span className="mini-kicker">{assigned.length}টি দায়িত্ব দেওয়া · {done.length}টি কাজ জমা</span><h3>মানচিত্রের তথ্য থেকে দলের কাজ</h3><div className="ops-task-list">{current.tasks.map((task, index) => <button type="button" key={index} disabled={!approved || (!resourceReady && index === current.capacity.taskIndex)} className={`${done.includes(index) ? 'done' : ''} ${focusTask === index ? 'focused' : ''} ${!resourceReady && index === current.capacity.taskIndex ? 'resource-blocked' : ''}`} onClick={() => advanceTask(index)}><CheckCircle2 size={20}/><span><strong>{say(task.team)}</strong><small>{say(task.action)}</small></span><em>{!resourceReady && index === current.capacity.taskIndex ? 'সরঞ্জাম/অনুমতি নেই' : done.includes(index) ? 'জমা · আবার খুলুন' : assigned.includes(index) ? 'দেওয়া · update দিন' : 'দায়িত্ব দিন'}</em></button>)}</div><p className="ops-muted">প্রথম click-এ নমুনা দায়িত্ব, দ্বিতীয় click-এ মাঠের update। বাস্তব assignment ও evidence বিদ্যমান Incident/Task workflow-তে হবে।</p></section>
+      {'responseModes' in current && current.responseModes && <OperationsResponse key={current.id} modes={current.responseModes}/>}
+      <OperationsCoordination key={`coordination-${current.id}`} owner={current.owner} tasks={current.tasks} coordination={current.coordination}/>
     </div>}
 
     {step === 'follow' && <div className="ops-follow">
       <section className="ops-card"><span className="mini-kicker">আগে ব্যবস্থা, পরে শেখা</span><h3>পরিস্থিতি বদলালে পরিকল্পনাও বদলাবে</h3><div className="ops-trigger"><button type="button" className={rain ? 'active' : ''} onClick={() => setRain(!rain)}><CloudRain size={19}/> ভারী বৃষ্টির পূর্বাভাস</button><button type="button" className={crisis ? 'active' : ''} onClick={() => setCrisis(!crisis)}><AlertTriangle size={19}/> জরুরি অবস্থার অনুশীলন</button></div>{rain && <div className="ops-response"><strong>আগাম পদক্ষেপ</strong><p>{say(current.prevention)}</p></div>}{crisis && <div className="ops-response warning"><strong>অগ্রাধিকার পুনর্বিবেচনা</strong><p>{say(current.crisis)}</p><small>পরিবর্তনের কারণ ও পুরোনো কাজের প্রভাব দেখে কর্মকর্তা অনুমোদন করবেন।</small></div>}{!rain && !crisis && <p className="ops-muted">যেকোনো পরিস্থিতি চালু করে পরের সিদ্ধান্ত দেখুন।</p>}</section>
       <section className="ops-card"><span className="mini-kicker">কাজ জমা হলেই শেষ নয়</span><h3>ফল যাচাই ও পুনরাবৃত্তি দেখা</h3><div className="ops-task-list">{current.verify.map((item, index) => <button type="button" key={index} disabled={!allDone} className={checked.includes(index) ? 'done' : ''} onClick={() => toggle(index, checked, setChecked)}><CheckCircle2 size={20}/><span><strong>{say(item)}</strong></span><em>{checked.includes(index) ? 'যাচাই' : 'বাকি'}</em></button>)}</div><p className="ops-muted">{allChecked ? 'নমুনা case যাচাই হয়েছে। পরের বৃষ্টি/ব্যস্ত সময়ে আবার দেখার কাজও নথিভুক্ত করুন।' : allDone ? 'মাঠের জমা দেওয়া কাজ যাচাই করুন।' : 'আগের ধাপে mission অনুমোদন করে সব নমুনা কাজ জমা দিন।'}</p></section>
+      <section className="ops-card ops-watch"><span className="mini-kicker">আগের কাজ শেষ হলেও নজরদারি চলবে</span><h3>পুনরাবৃত্তি ও পাশের জায়গা দেখুন</h3><p><strong>কখন:</strong> {say(current.watch.trigger)} · <strong>কোথায়:</strong> {say(current.watch.location)}</p><p>{say(current.watch.reason)}</p><button type="button" className="button-dark" disabled={!allChecked || watchScheduled} onClick={() => setWatchScheduled(true)}>{watchScheduled ? 'নমুনা follow-up নির্ধারিত' : 'নমুনা follow-up নির্ধারণ'}</button>{watchScheduled && <div className="ops-watch-card"><strong>পুনরায় সমস্যা দেখা গেলে?</strong><p>আগের case বন্ধ দেখিয়ে থামবেন না; সংশ্লিষ্ট জায়গার নতুন মাঠ যাচাই ও দায়িত্বের খসড়া খুলুন।</p><button type="button" className="button-outline" onClick={flagRepeat}>পুনরাবৃত্তির সংকেত অনুশীলন</button></div>}<p className="ops-muted">এখানে কোনো বাস্তব reminder বা task তৈরি হয় না।</p></section>
       <section className="ops-card ops-partners"><span className="mini-kicker">পাইলট চালাতে যা লাগবে</span><h3>চ্যালেঞ্জ, দায়িত্ব ও ব্যবস্থা</h3><div>{seed.stakeholders.map(item => <article key={item.who.en}><strong>{say(item.who)}</strong><span>{say(item.challenge)}</span><b>{say(item.response)}</b></article>)}</div></section>
     </div>}
   </div>
