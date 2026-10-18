@@ -19,6 +19,8 @@ Next.js ভিত্তিক বাংলাভাষী কর্মকর্�
 
 ## প্রদর্শনের পথ
 
+**নতুন সমন্বিত অপারেশন:** কর্মকর্তার সাইন ইনের পর `/operations` খুলুন। তিনটি seeded case-এ নাগরিক/অনুমোদিত CCTV/ড্রোন/মাঠের signal, উৎসের বয়স ও সীমা, সম্ভাব্য duplicate, asset path, সম্ভাব্য কারণ, ব্যাখ্যাসহ priority, একাধিক দলের mission, বৃষ্টি ও জরুরি অবস্থার পরিবর্তন, ফল যাচাই এবং stakeholder challenge দেখা যায়। অগ্রাধিকার বাছা, নমুনা mission অনুমোদন এবং checkboxes কেবল এই browser session-এর rehearsal; এগুলো database task তৈরি বা বদলায় না। একই JSON seed `src/lib/operations-seed.json` ও Flutter-এর `assets/operations-seed.json`-এ রাখা হয়েছে। বাস্তব shared assignment এখনও ঘটনা কেন্দ্র ও কাজের তালিকায় হয়।
+
 1. নির্বাহী অ্যাকাউন্ট → সারসংক্ষেপ, মানচিত্র ও ঘটনা দেখুন।
 2. মিডিয়া বিশ্লেষণে `mixed` দৃশ্য নির্বাচন করুন। স্কোর ও শনাক্তকরণ **সিমুলেটেড**। পর্যবেক্ষণ যাচাইয়ের তালিকায় পাঠান।
 3. ঘটনা কেন্দ্রে পর্যবেক্ষণ যাচাই করে ঘটনা তৈরি করুন। একই ঘটনায় drainage ও waste বিভাগে আলাদা দায়িত্ব দিন।
@@ -37,6 +39,7 @@ Next.js ভিত্তিক বাংলাভাষী কর্মকর্�
 - প্রকৃত Supabase project/key ছাড়া build ও public landing যাচাই করা যায়; shared-state এবং RLS end-to-end পরীক্ষা করতে project setup প্রয়োজন।
 - `npm run test:layout` চালাতে আগে `npm run dev` বা `npm run start` দিয়ে স্থানীয় সাইট চালু রাখুন। স্ক্রিপ্ট স্থানীয় Chrome দিয়ে ৩৯০ পিক্সেল mobile viewport ও sign-in অংশের ছবি যাচাই করে।
 - `npm run test:official-layout` চালাতে স্থানীয় সাইট, Supabase ও ব্যক্তিগত ডেমো অ্যাকাউন্ট প্রস্তুত রাখুন। এটি নির্বাহী ১৩৬৬×৭৬৮ এবং মাঠকর্মী ৩৯০×৮৪৪ স্ক্রিনশট ও horizontal overflow পরীক্ষা করে; কোনো পাসওয়ার্ড প্রিন্ট করে না।
+- `npm run test:operations-demo` একই প্রস্তুতি নিয়ে seeded planning loop-এ click-through, desktop/mobile layout এবং viewport overflow যাচাই করে। পুরোনো account password বদলে গেলে আগে স্থানীয় account JSON ও Supabase sign-in মিলিয়ে নিন।
 - `npm run test:web-boundary` চালালে signed-out URL/API এবং নাগরিক A-এর ওয়েব কর্মকর্তা সাইন ইন বন্ধ আছে কি না যাচাই হয়।
 
 দুই ক্লায়েন্টের পূর্ণ পরীক্ষা ও রেকর্ডিং পরিকল্পনা: [`INTEGRATION_TEST_AND_RECORDING_PLAN.md`](./INTEGRATION_TEST_AND_RECORDING_PLAN.md)। শুধু নমুনা scenario-এর অতিরিক্ত rehearsal: [`DEMO_TEST_PLAN.md`](./DEMO_TEST_PLAN.md)।

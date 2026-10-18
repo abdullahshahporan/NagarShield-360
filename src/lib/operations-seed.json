@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "notice": {
+    "en": "Illustrative rehearsal. Camera, drone, weather and asset links are seeded examples. No live feed, AI inference or dispatch is connected here.",
+    "bn": "এটি সাজানো অনুশীলন। ক্যামেরা, ড্রোন, আবহাওয়া ও স্থাপনার সংযোগ নমুনা তথ্য; এখানে লাইভ ফিড, AI শনাক্তকরণ বা বাস্তব dispatch যুক্ত নয়।"
+  },
+  "cases": [
+    {
+      "id": "market",
+      "code": "PILOT-01",
+      "image": "mixed",
+      "title": { "en": "Market corridor: waste, drain and walking space", "bn": "বাজার করিডর: বর্জ্য, ড্রেন ও হাঁটার পথ" },
+      "area": { "en": "Illustrative Mirpur ward", "bn": "নমুনা মিরপুর ওয়ার্ড" },
+      "story": { "en": "Waste near an inlet, water on the road and a crowded footpath may be one connected job. Sending three teams separately can leave the cause untouched.", "bn": "ড্রেনের মুখে বর্জ্য, রাস্তায় পানি আর ভরা ফুটপাত—তিনটি আলাদা অভিযোগ হলেও একই জায়গার একটি কাজ হতে পারে। আলাদা দল পাঠালে মূল কারণ থেকে যেতে পারে।" },
+      "signals": [
+        { "source": "citizen", "age": "30 min", "quality": "medium", "text": { "en": "A resident reports water crossing the walking route.", "bn": "নাগরিক জানিয়েছেন, হাঁটার পথে পানি উঠেছে।" }, "limit": { "en": "Location is approximate; check before action.", "bn": "অবস্থান আনুমানিক; কাজের আগে যাচাই দরকার।" } },
+        { "source": "camera", "age": "12 min", "quality": "medium", "text": { "en": "Permitted local camera shows the footpath narrowing.", "bn": "অনুমোদিত স্থানীয় ক্যামেরায় ফুটপাত সংকুচিত দেখা যায়।" }, "limit": { "en": "The drain interior is not visible.", "bn": "ড্রেনের ভেতর দেখা যায় না।" } },
+        { "source": "drone", "age": "1 day", "quality": "low", "text": { "en": "Approved survey image shows waste along the corridor.", "bn": "অনুমোদিত জরিপের ছবিতে করিডরজুড়ে বর্জ্য দেখা যায়।" }, "limit": { "en": "Older image; confirm current conditions on site.", "bn": "ছবিটি পুরোনো; বর্তমান অবস্থা মাঠে মিলিয়ে নিতে হবে।" } },
+        { "source": "field", "age": "2 h", "quality": "high", "text": { "en": "Ward worker notes a blocked inlet and access for a small vehicle.", "bn": "ওয়ার্ডকর্মী বন্ধ inlet এবং ছোট গাড়ির প্রবেশপথ নথিভুক্ত করেছেন।" }, "limit": { "en": "Outlet condition still unknown.", "bn": "পানি বের হওয়ার মুখের অবস্থা এখনও অজানা।" } }
+      ],
+      "duplicate": { "en": "Two resident reports and the camera view may describe the same location. Keep each source, link them to one case and let the officer confirm.", "bn": "দুটি নাগরিক প্রতিবেদন ও ক্যামেরার দৃশ্য একই জায়গার হতে পারে। উৎসগুলো রেখে একটি ঘটনায় মিলিয়ে কর্মকর্তা নিশ্চিত করবেন।" },
+      "assetPath": ["Market inlet D-21", "Main drain D-06", "Culvert C-04", "Canal outlet"],
+      "hypothesis": { "en": "The road water may be held back at culvert C-04 downstream.", "bn": "রাস্তার পানি নিচের দিকের C-04 কালভার্টে আটকে থাকতে পারে।" },
+      "reason": { "en": "Several upstream drains depend on it and a previous blockage was recorded. This is a network-based lead, not a flood simulation.", "bn": "উপরের কয়েকটি ড্রেন এটির ওপর নির্ভর করে এবং আগেও এখানে বাধা নথিভুক্ত হয়েছে। এটি সংযোগভিত্তিক ধারণা, বন্যার simulation নয়।" },
+      "fieldCheck": { "en": "Engineer checks the inlet, culvert and outlet before confirming the cause.", "bn": "কারণ নিশ্চিত করার আগে প্রকৌশলী inlet, কালভার্ট ও outlet দেখবেন।" },
+      "options": [
+        { "id": "local", "title": { "en": "Clear the local inlet", "bn": "স্থানীয় inlet পরিষ্কার" }, "reach": 2, "safety": 3, "recurrence": 2, "access": 5, "why": { "en": "Quick to reach, but may help only one street.", "bn": "দ্রুত পৌঁছানো যায়, তবে হয়তো একটি রাস্তারই উপকার হবে।" } },
+        { "id": "culvert", "title": { "en": "Inspect culvert C-04", "bn": "C-04 কালভার্ট পরীক্ষা" }, "reach": 5, "safety": 5, "recurrence": 4, "access": 3, "why": { "en": "Could relieve several connected streets; confirm access first.", "bn": "সংযুক্ত কয়েকটি রাস্তার উপকার হতে পারে; আগে প্রবেশপথ নিশ্চিত করতে হবে।" } },
+        { "id": "canal", "title": { "en": "Inspect canal outlet", "bn": "খালের outlet পরীক্ষা" }, "reach": 4, "safety": 3, "recurrence": 3, "access": 2, "why": { "en": "Wider reach, but access and ownership need checking.", "bn": "প্রভাব বিস্তৃত হতে পারে, তবে প্রবেশপথ ও দায়িত্ব যাচাই দরকার।" } }
+      ],
+      "owner": { "en": "Ward operations officer", "bn": "ওয়ার্ড পরিচালনা কর্মকর্তা" },
+      "route": { "en": "Small vehicle → market inlet → culvert C-04 → canal outlet", "bn": "ছোট গাড়ি → বাজার inlet → C-04 কালভার্ট → খালের outlet" },
+      "resources": { "en": "Drain crew, waste crew, small vehicle, inspection tools and traffic support", "bn": "ড্রেন দল, বর্জ্য দল, ছোট গাড়ি, পরিদর্শন সরঞ্জাম ও ট্রাফিক সহায়তা" },
+      "tasks": [
+        { "team": { "en": "Waste", "bn": "বর্জ্য" }, "action": { "en": "Open safe access to the inlet.", "bn": "inlet-এ নিরাপদ প্রবেশপথ খুলুন।" } },
+        { "team": { "en": "Drainage", "bn": "ড্রেনেজ" }, "action": { "en": "Inspect the culvert and outlet; clear a confirmed blockage.", "bn": "কালভার্ট ও outlet পরীক্ষা করুন; বাধা নিশ্চিত হলে পরিষ্কার করুন।" } },
+        { "team": { "en": "Public space", "bn": "জনপরিসর" }, "action": { "en": "Restore a walkable footpath.", "bn": "ফুটপাতে হাঁটার জায়গা ফিরিয়ে দিন।" } },
+        { "team": { "en": "Traffic", "bn": "ট্রাফিক" }, "action": { "en": "Keep the road usable during work.", "bn": "কাজের সময় রাস্তায় চলাচল বজায় রাখুন।" } },
+        { "team": { "en": "Health", "bn": "স্বাস্থ্য" }, "action": { "en": "Inspect persistent water; do not infer mosquito presence from an image.", "bn": "স্থায়ী পানি পরীক্ষা করুন; শুধু ছবি দেখে মশা আছে ধরে নেবেন না।" } }
+      ],
+      "prevention": { "en": "If heavy rain is forecast, inspect the repeat blockage before the rain and ask an engineer whether a lasting repair is needed.", "bn": "ভারী বৃষ্টির পূর্বাভাস থাকলে আগের বাধার জায়গাটি আগেই পরীক্ষা করুন; স্থায়ী মেরামত দরকার কি না প্রকৌশলী দেখবেন।" },
+      "crisis": { "en": "If the nearby hospital approach becomes blocked, show the available crew and pump, then let the control-room officer approve a new order.", "bn": "কাছের হাসপাতালের পথ বন্ধ হলে উপলব্ধ দল ও pump দেখিয়ে control-room কর্মকর্তা নতুন অগ্রাধিকার অনুমোদন করবেন।" },
+      "verify": [
+        { "en": "Before and after location photos", "bn": "একই স্থানের কাজের আগে ও পরের ছবি" },
+        { "en": "Engineer confirms water can exit", "bn": "প্রকৌশলী পানি বের হওয়ার পথ নিশ্চিত করেন" },
+        { "en": "Footpath remains passable", "bn": "ফুটপাত দিয়ে চলা যায়" },
+        { "en": "Recheck after the next rainfall", "bn": "পরের বৃষ্টির পরে আবার দেখা" }
+      ]
+    },
+    {
+      "id": "alley",
+      "code": "PILOT-02",
+      "image": "water",
+      "title": { "en": "Between buildings: hidden waste and standing water", "bn": "ভবনের মাঝখানে: আড়ালে বর্জ্য ও জমা পানি" },
+      "area": { "en": "Illustrative residential lane", "bn": "নমুনা আবাসিক গলি" },
+      "story": { "en": "A narrow gap is hard to inspect repeatedly. Waste and standing water can persist while a road camera sees nothing useful.", "bn": "সরু ফাঁক বারবার দেখা কঠিন। রাস্তার ক্যামেরায় কিছু না দেখা গেলেও সেখানে বর্জ্য ও পানি থেকে যেতে পারে।" },
+      "signals": [
+        { "source": "citizen", "age": "4 h", "quality": "medium", "text": { "en": "Resident reports smell and standing water.", "bn": "বাসিন্দা দুর্গন্ধ ও জমা পানির কথা জানিয়েছেন।" }, "limit": { "en": "Photo does not identify larvae.", "bn": "ছবি দিয়ে লার্ভা শনাক্ত হয় না।" } },
+        { "source": "drone", "age": "6 h", "quality": "medium", "text": { "en": "Approved overhead survey suggests waste in the gap.", "bn": "অনুমোদিত ওপরের জরিপে ফাঁকে বর্জ্যের ইঙ্গিত পাওয়া যায়।" }, "limit": { "en": "Roof and walls hide part of the ground.", "bn": "ছাদ ও দেয়ালে মাটির কিছু অংশ আড়াল থাকে।" } },
+        { "source": "field", "age": "1 day", "quality": "low", "text": { "en": "Health worker requested access to inspect water.", "bn": "স্বাস্থ্যকর্মী পানি পরীক্ষার জন্য প্রবেশের অনুরোধ করেছেন।" }, "limit": { "en": "Owner permission is still needed.", "bn": "মালিকের অনুমতি এখনও প্রয়োজন।" } }
+      ],
+      "duplicate": { "en": "Keep repeated resident reports together, but show that the site has not yet been inspected.", "bn": "একই জায়গার বারবার দেওয়া প্রতিবেদন একত্রে রাখুন, তবে মাঠপর্যায়ে পরীক্ষা হয়নি তা স্পষ্ট দেখান।" },
+      "assetPath": ["Lane entrance", "Building gap", "Local drain", "Main drain"],
+      "hypothesis": { "en": "Waste may prevent water from reaching the local drain; mosquito risk needs a health inspection.", "bn": "বর্জ্য স্থানীয় ড্রেনে পানি যেতে বাধা দিতে পারে; মশার ঝুঁকি স্বাস্থ্যকর্মীর পরীক্ষায় বুঝতে হবে।" },
+      "reason": { "en": "The site has repeated reports and poor visibility. No image proves a breeding site.", "bn": "বারবার প্রতিবেদন এসেছে, জায়গাটি সহজে দেখা যায় না। কোনো ছবি প্রজননস্থল প্রমাণ করে না।" },
+      "fieldCheck": { "en": "Secure access, inspect water and drainage, and record a corrected map location.", "bn": "প্রবেশের অনুমতি নিয়ে পানি ও ড্রেন দেখুন এবং মানচিত্রে সঠিক অবস্থান লিখুন।" },
+      "options": [
+        { "id": "health", "title": { "en": "Health inspection first", "bn": "আগে স্বাস্থ্য পরীক্ষা" }, "reach": 4, "safety": 5, "recurrence": 4, "access": 2, "why": { "en": "Clarifies the health concern; access approval required.", "bn": "স্বাস্থ্যঝুঁকি পরিষ্কার হবে; প্রবেশের অনুমতি দরকার।" } },
+        { "id": "waste", "title": { "en": "Clear visible waste", "bn": "দৃশ্যমান বর্জ্য সরানো" }, "reach": 3, "safety": 3, "recurrence": 2, "access": 3, "why": { "en": "Improves the site, but drainage may still be blocked.", "bn": "জায়গা পরিষ্কার হবে, কিন্তু ড্রেন তখনও বন্ধ থাকতে পারে।" } },
+        { "id": "drain", "title": { "en": "Inspect the local drain", "bn": "স্থানীয় ড্রেন পরীক্ষা" }, "reach": 3, "safety": 4, "recurrence": 4, "access": 2, "why": { "en": "Tests a possible cause once entry is arranged.", "bn": "প্রবেশের ব্যবস্থা হলে সম্ভাব্য কারণ দেখা যাবে।" } }
+      ],
+      "owner": { "en": "Ward health and sanitation coordinator", "bn": "ওয়ার্ড স্বাস্থ্য ও পরিচ্ছন্নতা সমন্বয়কারী" },
+      "route": { "en": "Resident contact → permission → gap inspection → local drain", "bn": "বাসিন্দার সঙ্গে যোগাযোগ → অনুমতি → ফাঁক পরীক্ষা → স্থানীয় ড্রেন" },
+      "resources": { "en": "Health inspector, sanitation crew, drain worker and safe access equipment", "bn": "স্বাস্থ্য পরিদর্শক, পরিচ্ছন্নতা দল, ড্রেনকর্মী ও নিরাপদ প্রবেশের সরঞ্জাম" },
+      "tasks": [
+        { "team": { "en": "Ward", "bn": "ওয়ার্ড" }, "action": { "en": "Arrange access with the property owner.", "bn": "সম্পত্তির মালিকের সঙ্গে প্রবেশের ব্যবস্থা করুন।" } },
+        { "team": { "en": "Health", "bn": "স্বাস্থ্য" }, "action": { "en": "Inspect standing water and record findings.", "bn": "জমা পানি পরীক্ষা করে ফল লিখুন।" } },
+        { "team": { "en": "Sanitation", "bn": "পরিচ্ছন্নতা" }, "action": { "en": "Remove confirmed waste safely.", "bn": "নিশ্চিত বর্জ্য নিরাপদে সরান।" } },
+        { "team": { "en": "Drainage", "bn": "ড্রেনেজ" }, "action": { "en": "Check water exit and correct the asset map.", "bn": "পানি বের হওয়ার পথ দেখুন ও স্থাপনার মানচিত্র ঠিক করুন।" } }
+      ],
+      "prevention": { "en": "Schedule a follow-up after rain; repeated water needs an engineering review, not endless cleaning.", "bn": "বৃষ্টির পরে আবার দেখুন; বারবার পানি জমলে শুধু পরিষ্কার না করে প্রকৌশল পর্যালোচনা করুন।" },
+      "crisis": { "en": "If illness reports rise, health officials review the site first and decide on public-health action.", "bn": "অসুস্থতার প্রতিবেদন বাড়লে স্বাস্থ্য কর্মকর্তারা জায়গা যাচাই করে জনস্বাস্থ্য ব্যবস্থা ঠিক করবেন।" },
+      "verify": [
+        { "en": "Owner access recorded", "bn": "মালিকের অনুমতি নথিভুক্ত" },
+        { "en": "Health inspection recorded", "bn": "স্বাস্থ্য পরীক্ষা নথিভুক্ত" },
+        { "en": "Waste and water rechecked", "bn": "বর্জ্য ও পানি আবার দেখা" },
+        { "en": "Resident follow-up after rain", "bn": "বৃষ্টির পর বাসিন্দার সঙ্গে খোঁজ নেওয়া" }
+      ]
+    },
+    {
+      "id": "footpath",
+      "code": "PILOT-03",
+      "image": "footpath",
+      "title": { "en": "A footpath cleared today, blocked again tomorrow", "bn": "আজ ফুটপাত খালি, কাল আবার দখল" },
+      "area": { "en": "Illustrative market entrance", "bn": "নমুনা বাজার প্রবেশপথ" },
+      "story": { "en": "A one-off clearance may shift the obstruction to the next road. Repeated views and field checks help plan a lasting response.", "bn": "একবার উচ্ছেদ করলে বাধা পাশের রাস্তায় সরে যেতে পারে। বারবার দেখা ও মাঠের তথ্য নিয়ে স্থায়ী ব্যবস্থা পরিকল্পনা করা যায়।" },
+      "signals": [
+        { "source": "camera", "age": "8 min", "quality": "high", "text": { "en": "Permitted view shows pedestrians moving into traffic.", "bn": "অনুমোদিত ক্যামেরায় পথচারীকে রাস্তায় নামতে দেখা যায়।" }, "limit": { "en": "View covers one junction only.", "bn": "ক্যামেরায় শুধু একটি মোড় দেখা যায়।" } },
+        { "source": "citizen", "age": "50 min", "quality": "medium", "text": { "en": "Residents report the next road is now blocked too.", "bn": "বাসিন্দারা জানিয়েছেন, পাশের রাস্তাও এখন বাধাগ্রস্ত।" }, "limit": { "en": "Second location needs verification.", "bn": "দ্বিতীয় জায়গাটি যাচাই দরকার।" } },
+        { "source": "field", "age": "3 days", "quality": "medium", "text": { "en": "Earlier clearance completed at the same market.", "bn": "একই বাজারে আগের উচ্ছেদ সম্পন্ন হয়েছিল।" }, "limit": { "en": "Old completion is not current proof.", "bn": "আগের সমাপ্তি বর্তমান অবস্থার প্রমাণ নয়।" } }
+      ],
+      "duplicate": { "en": "Separate the two roads as locations, but link their recurrence under one corridor mission.", "bn": "দুটি রাস্তা আলাদা অবস্থান রাখুন, কিন্তু পুনরাবৃত্তি একই করিডর mission-এ যুক্ত করুন।" },
+      "assetPath": ["Market entrance", "Footpath A", "Crossing", "Footpath B"],
+      "hypothesis": { "en": "The obstruction is moving along the corridor after each clearance.", "bn": "প্রতিবার উচ্ছেদের পরে বাধাটি করিডরের অন্য জায়গায় সরছে।" },
+      "reason": { "en": "A previous completion and a new nearby report suggest recurrence; an officer should confirm both sites.", "bn": "আগের সমাপ্তি ও পাশের নতুন প্রতিবেদন পুনরাবৃত্তির ইঙ্গিত; কর্মকর্তা দুই জায়গাই নিশ্চিত করবেন।" },
+      "fieldCheck": { "en": "Walk both sides, confirm pedestrian access and speak with market representatives.", "bn": "দুই পাশ হেঁটে দেখুন, পথচারীর জায়গা নিশ্চিত করুন এবং বাজার প্রতিনিধির সঙ্গে কথা বলুন।" },
+      "options": [
+        { "id": "crossing", "title": { "en": "Protect the crossing", "bn": "পারাপারের জায়গা রক্ষা" }, "reach": 5, "safety": 5, "recurrence": 4, "access": 4, "why": { "en": "Keeps pedestrians out of moving traffic.", "bn": "পথচারীকে চলন্ত যানবাহনের পথ থেকে সরায়।" } },
+        { "id": "old", "title": { "en": "Repeat old clearance", "bn": "আগের জায়গায় আবার উচ্ছেদ" }, "reach": 2, "safety": 3, "recurrence": 1, "access": 5, "why": { "en": "Fast, but may move the obstruction again.", "bn": "দ্রুত, তবে বাধা আবার সরে যেতে পারে।" } },
+        { "id": "other", "title": { "en": "Inspect the next road", "bn": "পাশের রাস্তা পরীক্ষা" }, "reach": 3, "safety": 4, "recurrence": 4, "access": 3, "why": { "en": "Checks displacement before setting a corridor plan.", "bn": "করিডর পরিকল্পনার আগে সরে যাওয়া বাধা যাচাই হয়।" } }
+      ],
+      "owner": { "en": "Ward public-space lead", "bn": "ওয়ার্ড জনপরিসর প্রধান" },
+      "route": { "en": "Crossing → first footpath → next road → market office", "bn": "পারাপার → প্রথম ফুটপাত → পাশের রাস্তা → বাজার অফিস" },
+      "resources": { "en": "Public-space team, traffic support, market liaison and walking survey", "bn": "জনপরিসর দল, ট্রাফিক সহায়তা, বাজার প্রতিনিধি ও হেঁটে জরিপ" },
+      "tasks": [
+        { "team": { "en": "Public space", "bn": "জনপরিসর" }, "action": { "en": "Open the crossing and walking route.", "bn": "পারাপার ও হাঁটার পথ খুলুন।" } },
+        { "team": { "en": "Traffic", "bn": "ট্রাফিক" }, "action": { "en": "Protect pedestrians during the operation.", "bn": "অভিযানের সময় পথচারীদের নিরাপদ রাখুন।" } },
+        { "team": { "en": "Ward", "bn": "ওয়ার্ড" }, "action": { "en": "Agree on a follow-up with the market group.", "bn": "বাজার প্রতিনিধিদের সঙ্গে পরের পর্যবেক্ষণ ঠিক করুন।" } },
+        { "team": { "en": "Field survey", "bn": "মাঠ জরিপ" }, "action": { "en": "Check the next road for displaced blockage.", "bn": "পাশের রাস্তায় বাধা সরে গেছে কি না দেখুন।" } }
+      ],
+      "prevention": { "en": "Recheck both roads at the same busy hour; repeated blockage triggers a ward-level management plan.", "bn": "একই ব্যস্ত সময়ে দুই রাস্তা আবার দেখুন; বারবার দখল হলে ওয়ার্ড পর্যায়ে ব্যবস্থাপনা পরিকল্পনা করুন।" },
+      "crisis": { "en": "If an ambulance route is affected, the control-room officer can move pedestrian and emergency access ahead of routine work.", "bn": "অ্যাম্বুলেন্সের পথ আটকে গেলে control-room কর্মকর্তা নিয়মিত কাজের আগে জরুরি চলাচলকে অগ্রাধিকার দিতে পারেন।" },
+      "verify": [
+        { "en": "Crossing is passable", "bn": "পারাপার খোলা" },
+        { "en": "Both roads inspected", "bn": "দুই রাস্তা পরীক্ষা" },
+        { "en": "Market follow-up agreed", "bn": "বাজারের সঙ্গে follow-up ঠিক" },
+        { "en": "Repeat check at the same hour", "bn": "একই সময়ে আবার যাচাই" }
+      ]
+    }
+  ],
+  "stakeholders": [
+    { "who": { "en": "DNCC and ward leads", "bn": "DNCC ও ওয়ার্ড নেতৃত্ব" }, "challenge": { "en": "Work can stall between departments.", "bn": "বিভাগের মাঝে কাজ আটকে যেতে পারে।" }, "response": { "en": "Name one case owner, task owners and an escalation path.", "bn": "একজন case owner, প্রতিটি কাজের owner ও escalation পথ নির্ধারণ।" } },
+    { "who": { "en": "Crews and engineers", "bn": "মাঠদল ও প্রকৌশলী" }, "challenge": { "en": "Maps and images can miss the real cause.", "bn": "মানচিত্র ও ছবিতে প্রকৃত কারণ বাদ পড়তে পারে।" }, "response": { "en": "Site checks, approved map corrections and offline updates.", "bn": "মাঠ যাচাই, অনুমোদিত মানচিত্র সংশোধন ও offline update।" } },
+    { "who": { "en": "Camera and drone owners", "bn": "ক্যামেরা ও ড্রোনের মালিক" }, "challenge": { "en": "Permissions, blind spots and feed failure limit coverage.", "bn": "অনুমতি, আড়াল ও feed বন্ধ থাকলে coverage কমে।" }, "response": { "en": "Agreed access and retention; use field reports when feeds fail.", "bn": "প্রবেশ ও সংরক্ষণের চুক্তি; feed না থাকলে মাঠের প্রতিবেদন।" } },
+    { "who": { "en": "ICT, health and community", "bn": "ICT, স্বাস্থ্য ও স্থানীয় মানুষ" }, "challenge": { "en": "False alerts, privacy and trust need care.", "bn": "ভুল সংকেত, গোপনীয়তা ও আস্থার বিষয় আছে।" }, "response": { "en": "Source checks, human approval, role access, audit and feedback.", "bn": "উৎস যাচাই, মানুষের অনুমোদন, role access, audit ও মতামত।" } }
+  ]
+}
