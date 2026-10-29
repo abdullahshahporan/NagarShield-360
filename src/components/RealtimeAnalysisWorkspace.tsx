@@ -139,7 +139,11 @@ export function RealtimeAnalysisWorkspace({ items, incidents, employees, role, d
 
   async function submitMarked(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!screenshot || !mark || !activeCase || !assignee || submitting) return
+    if (submitting) return
+    if (!mark || !screenshot) { setSubmitError('আগে ভিডিও বা ছবিতে জায়গাটি চিহ্নিত করে স্ক্রিনশট তৈরি করুন।'); return }
+    if (!activeCase) { setSubmitError('কোন ঘটনার কাজ দেবেন, সেটি নির্বাচন করুন।'); document.getElementById('monitor-incident')?.focus(); return }
+    if (!assignee) { setSubmitError('দায়িত্ব দেওয়ার জন্য একজন মাঠকর্মী নির্বাচন করুন।'); document.getElementById('monitor-assignee')?.focus(); return }
+    if (instruction.trim().length < 8) { setSubmitError('কী করতে হবে তা অন্তত ৮ অক্ষরে লিখুন। যেমন: ড্রেন পরিষ্কার করে ছবি দিন।'); document.getElementById('monitor-instruction')?.focus(); return }
     setSubmitting(true)
     setSubmitError('')
     try {
@@ -210,17 +214,18 @@ export function RealtimeAnalysisWorkspace({ items, incidents, employees, role, d
       <div className="monitor-actions"><button type="button" className="button-dark" disabled={!selected} onClick={() => { setMark(null); setScreenshot(null); setMarking(true) }}>{marking ? 'দৃশ্যে টেনে চিহ্ন দিন…' : mark ? 'চিহ্ন বদলান' : 'দৃশ্যে চিহ্ন দিন'}</button>{mark && <button type="button" className="button-text" onClick={() => { setMark(null); setScreenshot(null) }}>চিহ্ন মুছুন</button>}{selectedFeed && selected !== 'water' && <button type="button" className="button-outline" onClick={reviewFeed}><FileVideo size={15}/> নমুনা বিশ্লেষণ দেখুন</button>}{selected === 'live' && liveMode && <button type="button" className="button-outline" onClick={() => void captureFrame()}>ফ্রেম নিয়ে নিজে চিহ্ন দিন</button>}</div>
       {captureError && <p className="field-error" role="alert">{captureError}</p>}
       {screenshotUrl && <figure className="monitor-screenshot"><img src={screenshotUrl} alt="চিহ্নিত অংশসহ পাঠানোর স্ক্রিনশট"/><figcaption>এই চিহ্নিত স্ক্রিনশটটি নির্বাচিত কর্মীর কাজের সঙ্গে সংরক্ষিত হবে।</figcaption></figure>}
-      <form onSubmit={event => void submitMarked(event)} className="monitor-assignment"><div className="panel-head"><div><span className="mini-kicker">চিহ্নিত স্ক্রিনশটসহ দায়িত্ব</span><h2>নির্দিষ্ট কর্মীকে কাজ দিন</h2></div><UsersRound size={18}/></div>
+      <form noValidate onSubmit={event => void submitMarked(event)} className="monitor-assignment"><div className="panel-head"><div><span className="mini-kicker">চিহ্নিত স্ক্রিনশটসহ দায়িত্ব</span><h2>নির্দিষ্ট কর্মীকে কাজ দিন</h2></div><UsersRound size={18}/></div>
         <div className="form-grid">
           <label htmlFor="monitor-incident">খোলা ঘটনা<select id="monitor-incident" required value={caseId} onChange={event => { setCaseId(event.target.value); setAssigneeId('') }}><option value="" disabled>ঘটনা নির্বাচন করুন</option>{caseOptions.map(item => <option key={item.id} value={item.id}>{item.code} · {item.title_bn} · {item.area_bn}</option>)}</select></label>
           <label htmlFor="monitor-assignee">মাঠকর্মী<select id="monitor-assignee" required value={assigneeId} onChange={event => setAssigneeId(event.target.value)}><option value="" disabled>কর্মী নির্বাচন করুন</option>{availableEmployees.map(item => <option key={item.id} value={item.id}>{item.display_name}</option>)}</select></label>
         </div>
-        <label>কী করতে হবে<input required minLength={8} maxLength={500} value={instruction} onChange={event => setInstruction(event.target.value)} placeholder="যেমন: চিহ্নিত জায়গায় ড্রেনের মুখ পরিষ্কার করে ছবি দিন"/></label>
+        <label htmlFor="monitor-instruction">কী করতে হবে<input id="monitor-instruction" name="instruction" required minLength={8} maxLength={500} aria-describedby="monitor-instruction-help" value={instruction} onChange={event => { setInstruction(event.target.value); setSubmitError('') }} placeholder="যেমন: চিহ্নিত জায়গায় ড্রেনের মুখ পরিষ্কার করে ছবি দিন"/></label>
+        <p id="monitor-instruction-help" className="help-text">কাজের নির্দেশনা অন্তত ৮ অক্ষরে লিখুন।</p>
         <input type="hidden" name="incident_id" value={caseId}/><input type="hidden" name="assignee_id" value={assigneeId}/><input type="hidden" name="note" value={`${instruction.trim()} | ${markNote}`.slice(0, 1000)}/>
         {!caseOptions.length && <p className="field-error">{selected === 'live' ? 'ব্রাউজারের লাইভ দৃশ্য সংরক্ষিত ঘটনা নয়। আগে ফ্রেম নিয়ে নিজে পর্যালোচনা করুন; নমুনা ফুটেজের চিহ্ন থেকে সরাসরি কাজ দিতে পারবেন।' : 'এই দৃশ্যের খোলা ঘটনা নেই। আগে নিচে নমুনাটি যাচাই করে ঘটনা খুলুন, অথবা অন্য দৃশ্য বাছুন।'}</p>}
         {selected === 'water' && <p className="help-text">প্রদত্ত ভিডিওর জায়গা স্বয়ংক্রিয়ভাবে জানা যায় না। মিল আছে এমন খোলা ঘটনা কর্মকর্তা বেছে নেবেন।</p>}
         {submitError && <p className="field-error" role="alert">{submitError}</p>}
-        <button className="button-dark" type="submit" disabled={!mark || !screenshot || !activeCase || !assignee || instruction.trim().length < 8 || submitting}>{submitting ? 'স্ক্রিনশট ও কাজ পাঠানো হচ্ছে…' : 'স্ক্রিনশটসহ কাজ পাঠান'}</button>
+        <button className="button-dark" type="submit" disabled={submitting}>{submitting ? 'স্ক্রিনশট ও কাজ পাঠানো হচ্ছে…' : 'স্ক্রিনশটসহ কাজ পাঠান'}</button>
         <p className="help-text">পাঠালে ব্যক্তিগত storage-এ চিহ্নিত JPEG, ঘটনার অধীনে কাজ এবং নির্বাচিত কর্মীর অ্যাপের বিজ্ঞপ্তি তৈরি হয়। কর্মী ঘটনা খুলে ছবিটি দেখতে পারবেন। ফোনের push/SMS যায় না।</p>
       </form>
     </section>

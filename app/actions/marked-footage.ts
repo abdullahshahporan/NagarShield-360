@@ -11,9 +11,11 @@ export async function assignMarkedFootage(formData: FormData): Promise<{ error: 
   const incidentId = String(formData.get('incident_id') || '')
   const assigneeId = String(formData.get('assignee_id') || '')
   const note = String(formData.get('note') || '').trim()
+  const instruction = String(formData.get('instruction') || '').trim()
   const screenshot = formData.get('screenshot')
   if (!/^[0-9a-f-]{36}$/i.test(incidentId) || !/^[0-9a-f-]{36}$/i.test(assigneeId)) return { error: 'ঘটনা ও কর্মী নির্বাচন করুন।' }
   if (note.length < 8 || note.length > 1000) return { error: 'কাজের বিবরণ ঠিক করুন।' }
+  if (instruction.length < 8 || instruction.length > 500) return { error: 'কী করতে হবে তা অন্তত ৮ অক্ষরে লিখুন।' }
   if (!(screenshot instanceof File) || screenshot.type !== 'image/jpeg' || screenshot.size < 100 || screenshot.size > 1024 * 1024) {
     return { error: 'চিহ্নিত স্ক্রিনশট পাওয়া যায়নি বা ফাইলটি বড়।' }
   }
